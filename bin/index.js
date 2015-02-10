@@ -19,7 +19,7 @@ x.Handler;
 /**
  * @typedef {{input: string=, output: string=}}
  */
-x.Option;
+x.Options;
 
 
 /**
@@ -35,7 +35,7 @@ x.__cmd = function(input, output) {
 
 
 /**
- * @param {!x.Option} options
+ * @param {!x.Options} options
  * @param {!x.Handler} complete Success Handler
  * @param {!x.Handler} cancel Error handler
  */
