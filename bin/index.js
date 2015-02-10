@@ -11,20 +11,49 @@ var x = {};
 
 
 /**
- * @param {string} input Path to file for which externs are needed
- * @param {string} output Path to externs file.
+ * @typedef {!function(*)}
  */
-x.exec = function(input, output) {
-  var extractor = path.normalize(__dirname +
-      '/../externs-extractor/externsExtractor.py');
-  var option = '--output ' + output;
-  var cmd = ['python', extractor, option, input].join(' ');
+x.Handler;
 
-  cp.exec(cmd, function (error, stdout, stderr) {
-    if (error !== null) {
-      console.error(error);
-    }
-  });
+
+/**
+ * @typedef {{input: string=, output: string=}}
+ */
+x.Option;
+
+
+/**
+ * @param {string} input
+ * @param {string} output
+ * @return {string}
+ */
+x.__cmd = function(input, output) {
+  return ['python',
+    path.normalize(__dirname + '/../externs-extractor/externsExtractor.py'),
+    '--output ' + output, input].join(' ');
+};
+
+
+/**
+ * @param {!x.Option} options
+ * @param {!x.Handler} complete Success Handler
+ * @param {!x.Handler} cancel Error handler
+ */
+x.exec = function(options, complete, cancel) {
+  if (typeof options === 'object' &&
+      typeof options.input === 'string' && options.input !== '' &&
+      typeof options.output === 'string' && options.output !== '') {
+    cp.exec(x.__cmd(options.input, options.output),
+        function (error, stdout, stderr) {
+          if (error !== null) {
+            cancel(error)
+          } else {
+            complete();
+          }
+        });
+  } else {
+    cancel(new Error('Wrong externs-extractor options'));
+  }
 };
 
 
