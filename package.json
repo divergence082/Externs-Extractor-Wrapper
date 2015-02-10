@@ -1,6 +1,6 @@
 {
   "name": "externs-extractor-wrapper",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "bin/index.js",
   "repository": {
     "type": "git",
