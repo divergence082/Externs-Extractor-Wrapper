@@ -11,7 +11,14 @@ Externs-Extractor - utility for interface parsing, using for easy compilation an
 
 var x = require('externs-extractor-wrapper');
 
-x.exec('bin/index.js', 'externs/index.js');
+var options = {
+  input: 'bin/index.js',
+  output: 'externs/index.js'
+}
+
+x.exec(options, function() {
+  console.log('Externs are ready!');
+}, console.error);
 
 ```
 
