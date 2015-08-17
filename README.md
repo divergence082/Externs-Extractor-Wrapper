@@ -11,18 +11,13 @@ Externs-Extractor - utility for interface parsing, using for easy compilation an
 
 var x = require('externs-extractor-wrapper');
 
-var options = {
-  input: 'bin/index.js',
-  output: 'externs/index.js'
-}
-
-x.exec(options, function() {
-  console.log('Externs are ready!');
+x.exec('bin/index.js', function(externs) {
+  console.log('Externs: ' + externs);
 }, console.error);
 
 ```
 
-This code takes file `bin/index.js` and generates externs into file `externs/index.js`   
+This code takes file `bin/index.js` and generates externs   
 
 Other libraries using `bin/index.js` can be compiled by Closure Compiler with option `--externs externs/index.js` 
 
